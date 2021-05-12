@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  mysql_db:
+    image: 'mysql:8'
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'mydb'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3307:3306'
+    expose:
+      - '3307'
+    volumes:
+      - mysql_db:/var/lib/mysql
+
+  website:
+    build: .
+    command: python ./run.py
+    volumes:
+      - '.:/app'
+    ports:
+      - '5000:5000'
+
+volumes:
+  mysql_db:

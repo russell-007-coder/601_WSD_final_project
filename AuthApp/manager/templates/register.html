@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="icon" href="{{ url_for('static',filename='src/IMAGES/favicon.ico') }}" type="image/ico" sizes="32x32">
+    
+    <title>SignUp</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    
+    <meta title="Register">
+    <meta name="description" content="Register here.">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='power.min.css') }}" >
+
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css?family=Literata:700|Merriweather:700&display=swap');
+        
+        
+        .brand_logo{
+            margin: 0 0 0 0;
+            text-align: center;
+            display: inline-block;
+            padding: 0;
+            font-weight: bolder;
+            font-size: 37px;
+            width: 100%;
+        }
+        .brand_logo_f{
+            font-family: 'Merriweather', serif;
+            text-decoration: none;
+            font-weight: bolder;
+            color: rgb(28,28,22);
+        }    
+        *{
+            user-select: none;
+        }
+        body{
+            font-family:Arial, Helvetica, sans-serif;
+            font-weight: 400;
+            /* background-color: whitesmoke !important; */
+            background-color: #dbf0fe !important;
+        }
+        h1{
+            font-family: Roboto, Helvetica, Calibri, 'Trebuchet MS', sans-serif;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        .form-control:focus{            
+            color: #495057;
+            background-color: #fff;
+            border-color: #343a40!important;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem #52343a40 !important;
+        }
+        .login_wrapper{
+            /* background-color: var(--mdc-theme-primary); */
+            /* opacity: 0.925; */
+            min-height: 100vh;            
+        }
+        .login_inner_wrapper{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 550px;            
+        }
+        .login_white_wrapper{
+            margin: 0px 0 35px 0;            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;                        
+        }
+        .login_inner_white_wrapper{
+            background-color: #fff;            
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            padding: 25px 15px; 
+            width: 500px;
+            text-align: center;
+            box-sizing: border-box;
+            box-shadow: 0px 0px 3px #dadce0;
+        }
+        .sw-hr{            
+            padding: 0 25px;
+            border-top: 1px solid #e2e1e1;            
+        }
+    </style>
+</head>
+<body>
+    <div>                                
+        <!-- Alert Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="login_wrapper">
+        <div class="container login_inner_wrapper">
+            <div class="login_white_wrapper">                
+                <form class="sw-form login_inner_white_wrapper mt-5" method="POST" action="{{ url_for('users.register') }}">
+                    {{ form.hidden_tag() }}
+                    <div class="mx-3">
+                        <h5 class="f-24 px-3 text-left">Sign Up</h5>
+                        <hr class="sw-hr mt-0">
+                        <div class="mx-4 mb-4">
+                            
+                            <!-- Username -->
+                            <div class="my-3">
+                                <div class="w-100 text-left">
+                                    <label class="d-inline-block f-18" for="username">Username </label>
+                                </div>
+                                {% if form.username.errors %}
+                                    {{ form.username(class="f-20 form-control  is-invalid") }}
+                                    <div class="invalid-feedback text-left">
+                                        {% for error in form.username.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.username(class="f-20 form-control") }}
+                                {% endif %}
+                            </div>
+
+                            <!-- Email -->
+                            <div class="my-3">
+                                <div class="w-100 text-left">
+                                    <label class="d-inline-block f-18" for="email">Email </label>
+                                </div>
+                                {% if form.email.errors %}
+                                    {{ form.email(class="f-20 form-control  is-invalid") }}
+                                    <div class="invalid-feedback text-left">
+                                        {% for error in form.email.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.email(class="f-20 form-control") }}
+                                {% endif %}
+                            </div>                            
+
+                            <!-- Password -->
+                            <div class="my-3">
+                                <div class="w-100 text-left">
+                                    <label class="d-inline-block f-18" for="password">Password </label>
+                                </div>
+                                {% if form.password.errors %}
+                                    {{ form.password(class="f-20 form-control  is-invalid") }}
+                                    <div class="invalid-feedback text-left">
+                                        {% for error in form.password.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.password(class="f-20 form-control") }}
+                                {% endif %}
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="my-3">
+                                <div class="w-100 text-left">
+                                    <label class="d-inline-block f-18" for="confirm_password">Confirm Password </label>
+                                </div>
+                                {% if form.confirm_password.errors %}
+                                    {{ form.confirm_password(class="f-20 form-control  is-invalid") }}
+                                    <div class="invalid-feedback text-left">
+                                        {% for error in form.confirm_password.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.confirm_password(class="f-20 form-control") }}
+                                {% endif %}
+                            </div>
+
+                            <!-- Sign In Btn -->
+                            <button class="mt-4 sw-btn d-inline-block w-100 p-2">
+                                <span class="sw-btn-ripple"></span>
+                                Sign Up
+                            </button>
+                            
+
+                            <hr class="sw-hr pb-2">
+
+                            <!-- Sign Up -->
+                            <div>
+                                <h6 class="pb-2">
+                                   Already a user ?
+                                </h6>
+                                <a href="{{ url_for('users.login') }}">
+                                    <span class="sw-btn sw-btn-outline d-inline-block w-100">
+                                        <span class="sw-btn-ripple"></span>
+                                        Sign In
+                                    </span>  
+                                </a>
+                            </div>
+                            
+                        </div>                        
+                    </div>
+                </form>        
+                <div class="f-12 mt-1 w-100 px-2">
+                    <a href="#" class="text-left">Home</a>
+
+
+                </div>                
+            </div>            
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='power.min.js') }}"></script>
+</body>
+</html>
